@@ -1,7 +1,8 @@
 import express, {Application} from 'express';
 import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import morgan from 'morgan';
 
 class Server{
     
@@ -16,10 +17,14 @@ class Server{
 
     configure():void{
         this.app.set('port', process.env.SERVER_PORT);
+        this.app.use(morgan('dev'));
+        this.app.use(cors());
+        this.app.use(express.json);
+        this.app.use(express.urlencoded({extended:false}));
     }
 
     routes():void{
-        this.app.use(indexRoutes);
+        this.app.use('/', indexRoutes);
     }
 
 
