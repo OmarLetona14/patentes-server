@@ -1,10 +1,9 @@
 import express, {Application} from 'express';
 import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
-import consulta2Routes from './routes/consulta2Routes';  
-import dotenv from 'dotenv';
 import morgan from 'morgan';
 
+import consulta2Routes from './routes/consulta2Routes';  
 import paisRoutes from './routes/paisRoutes';   
 
 class Server{
@@ -12,14 +11,12 @@ class Server{
     public app:Application;
 
     constructor(){
-        dotenv.config();
-        this.app = express()
-        this.config()
-        this.routes()
+        this.app = express();
+        this.config();
+        this.routes();
     }
 
     config():void{
-         this.app.set('port', process.env.PORT || 3000)
          this.app.use(morgan('dev'))
          this.app.use(cors())
          this.app.use(express.json())
@@ -33,7 +30,7 @@ class Server{
     }
 
     start():void{
-        this.app.listen(3000, () =>{
+        this.app.listen(process.env.SERVER_PORT , () =>{
             console.log('Server is up');
         });
     }

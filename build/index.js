@@ -6,19 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
-const consulta2Routes_1 = __importDefault(require("./routes/consulta2Routes"));
-const dotenv_1 = __importDefault(require("dotenv"));
 const morgan_1 = __importDefault(require("morgan"));
+const consulta2Routes_1 = __importDefault(require("./routes/consulta2Routes"));
 const paisRoutes_1 = __importDefault(require("./routes/paisRoutes"));
 class Server {
     constructor() {
-        dotenv_1.default.config();
         this.app = express_1.default();
         this.config();
         this.routes();
     }
     config() {
-        this.app.set('port', process.env.PORT || 3000);
         this.app.use(morgan_1.default('dev'));
         this.app.use(cors_1.default());
         this.app.use(express_1.default.json());
@@ -30,7 +27,7 @@ class Server {
         this.app.use('/paises', paisRoutes_1.default);
     }
     start() {
-        this.app.listen(3000, () => {
+        this.app.listen(process.env.SERVER_PORT, () => {
             console.log('Server is up');
         });
     }
