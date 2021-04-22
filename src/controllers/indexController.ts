@@ -2,10 +2,11 @@ import {Request, Response} from 'express';
 
 class IndexController{
 
-    index(req:Request,res:Response){
-        res.send('Index');
+    public index(req:Request,res:Response){
+        res.json({'message':'Changed'});
     }
 
 }
 
-export const indexController = new IndexController();
+const indexController = new IndexController();
+export default indexController;

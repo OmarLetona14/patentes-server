@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.indexController = void 0;
 class IndexController {
     index(req, res) {
-        res.send('Index');
+        res.json({ 'message': 'Changed' });
     }
 }
-exports.indexController = new IndexController();
+const indexController = new IndexController();
+exports.default = indexController;

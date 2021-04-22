@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {indexController} from '../controllers/indexController'
+import i from '../controllers/indexController';
 
 class IndexRoutes{
 
@@ -10,9 +10,9 @@ class IndexRoutes{
     }
 
     configure():void{
-        this.router.get('/', indexController.index);
+        this.router.get('/', i.index);
     }
 }
 
-const indexroutes = new IndexRoutes();
-export default indexroutes.router;
+const indexRoutes = new IndexRoutes();
+export default indexRoutes.router;
