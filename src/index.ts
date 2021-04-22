@@ -5,11 +5,14 @@ import consulta2Routes from './routes/consulta2Routes';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 
+import paisRoutes from './routes/paisRoutes';   
+
 class Server{
     
     public app:Application;
 
     constructor(){
+        dotenv.config();
         this.app = express()
         this.config()
         this.routes()
@@ -25,7 +28,8 @@ class Server{
 
     routes():void{
         this.app.use('/',indexRoutes);
-        this.app.use('/consulta2', consulta2Routes)
+        this.app.use('/consulta2', consulta2Routes);
+        this.app.use('/paises', paisRoutes);
     }
 
     start():void{

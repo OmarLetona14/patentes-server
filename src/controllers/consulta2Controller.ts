@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import connection from '../database/connection'
+import connection from '../database/connection';
 
 class Consulta2Controller{
  
@@ -9,7 +9,6 @@ class Consulta2Controller{
             if (err) throw err;
             res.json(result);
         });
-
     }
 }
 
