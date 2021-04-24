@@ -34,7 +34,7 @@ class PaisController {
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
-                res.json({ result });
+                res.json(result);
             });
         });
     }
@@ -65,7 +65,7 @@ class PaisController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const q = `update pais set nombre_pais = '${req.body.nombre_pais}', poblacion = ${req.body.poblacion}, area = ${req.body.area}
-        , capital = ${req.body.capital}, id_region = ${req.body.id_region} where id_pais = ${id}`;
+        , capital = '${req.body.capital}', id_region = ${req.body.id_region} where id_pais = ${id}`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;

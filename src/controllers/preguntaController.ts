@@ -1,13 +1,14 @@
 import {Request, Response} from 'express';
 import connection from '../database/connection';
 
-class PaisController{
+class PreguntaController{
 
-    public async getOnePais(req:Request,res:Response): Promise<void>{
+    public async getOne(req:Request,res:Response): Promise<void>{
         const {id} = req.params;
-        const q = `select * from pais as p 
-        inner join region as r on r.id_region = p.id_region
-        where id_pais = ${id};`;
+        const q = `select * from respuesta as r
+        inner join pregunta as p on p.id_pregunta = r.id_pregunta
+        inner join encuesta as e on e.id_encuesta = p.id_encuesta
+        where id_respuesta = ${id};`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
             res.json(result[0]);
@@ -15,8 +16,9 @@ class PaisController{
     }
 
     public async getAll(req:Request, res:Response): Promise<void>{
-        const q = `select * from pais as p 
-        inner join region as r on r.id_region = p.id_region;`;
+        const q = `select * from respuesta as r
+        inner join pregunta as p on p.id_pregunta = r.id_pregunta
+        inner join encuesta as e on e.id_encuesta = p.id_encuesta;`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
             res.json(result);
@@ -53,5 +55,5 @@ class PaisController{
     }
 }
 
-const paisController = new PaisController();
-export default paisController;
+const preguntaController = new PreguntaController();
+export default preguntaController;

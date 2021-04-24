@@ -5,6 +5,8 @@ import morgan from 'morgan';
 
 import consulta2Routes from './routes/consulta2Routes';  
 import paisRoutes from './routes/paisRoutes';   
+import regionRoutes from './routes/regionRoutes';
+import preguntaRoutes from './routes/preguntaRoutes';
 
 class Server{
     
@@ -27,6 +29,8 @@ class Server{
         this.app.use('/',indexRoutes);
         this.app.use('/consulta2', consulta2Routes);
         this.app.use('/paises', paisRoutes);
+        this.app.use('/regiones', regionRoutes);
+        this.app.use('/preguntas', preguntaRoutes);
     }
 
     start():void{
