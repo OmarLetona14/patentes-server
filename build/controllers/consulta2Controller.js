@@ -16,7 +16,11 @@ const connection_1 = __importDefault(require("../database/connection"));
 class Consulta2Controller {
     getConsulta(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `call consulta2();`;
+            const q = `select p.nombre_pais, if(count(*) = 1, 0, count(*)) as numero_respuestas
+        from respuesta_pais as rp
+        right join pais as p on p.id_pais = rp.id_pais
+        group by p.nombre_pais 
+        order by p.nombre_pais;`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;

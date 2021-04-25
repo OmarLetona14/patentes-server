@@ -13,14 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../database/connection"));
-class Consulta1Controller {
-    getConsulta(req, res) {
+class EncuestaController {
+    getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `select p.nombre_profesional, count(*) as inventos_asignados from profesional as p 
-        inner join invento_profesional as ip on ip.id_profesional = p.id_profesional
-        inner join invento as i on i.id_invento = ip.id_invento
-        group by p.nombre_profesional
-        order by count(*) desc;`;
+            const q = `select * from encuesta;`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -28,6 +24,17 @@ class Consulta1Controller {
             });
         });
     }
+    getByName(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const q = `select * from encuesta
+        where nombre_encuesta = '${req.body.nombre_encuesta}'`;
+            yield connection_1.default.query(q, (err, result, fields) => {
+                if (err)
+                    throw err;
+                res.json(result[0]);
+            });
+        });
+    }
 }
-const consulta1Controller = new Consulta1Controller();
-exports.default = consulta1Controller;
+const encuestaController = new EncuestaController();
+exports.default = encuestaController;

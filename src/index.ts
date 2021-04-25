@@ -7,6 +7,9 @@ import consulta2Routes from './routes/consulta2Routes';
 import paisRoutes from './routes/paisRoutes';   
 import regionRoutes from './routes/regionRoutes';
 import preguntaRoutes from './routes/preguntaRoutes';
+import consulta1Routes from './routes/consulta1Routes';  
+import respuestaRoutes from './routes/respuestaRoutes';
+import encuestaRoutes from './routes/encuestaRoutes';
 
 class Server{
     
@@ -27,10 +30,13 @@ class Server{
 
     routes():void{
         this.app.use('/',indexRoutes);
+        this.app.use('/consulta1', consulta1Routes);
         this.app.use('/consulta2', consulta2Routes);
         this.app.use('/paises', paisRoutes);
         this.app.use('/regiones', regionRoutes);
         this.app.use('/preguntas', preguntaRoutes);
+        this.app.use('/respuestas', respuestaRoutes);
+        this.app.use('/encuestas', encuestaRoutes);
     }
 
     start():void{

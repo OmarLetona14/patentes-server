@@ -1,7 +1,7 @@
 import {Router} from 'express';
-import {indexController} from '../controllers/indexController'
+import c from '../controllers/consulta1Controller';
 
-class IndexRoutes{
+class Consulta1Routes{
 
     public router: Router = Router();
 
@@ -10,9 +10,9 @@ class IndexRoutes{
     }
 
     configure():void{
-        this.router.get('/', indexController.index);
+        this.router.get('/', c.getConsulta);
     }
 }
 
-const indexroutes = new IndexRoutes();
-export default indexroutes.router;
+const consulta1Routes = new Consulta1Routes();
+export default consulta1Routes.router;

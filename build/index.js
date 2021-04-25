@@ -10,6 +10,10 @@ const morgan_1 = __importDefault(require("morgan"));
 const consulta2Routes_1 = __importDefault(require("./routes/consulta2Routes"));
 const paisRoutes_1 = __importDefault(require("./routes/paisRoutes"));
 const regionRoutes_1 = __importDefault(require("./routes/regionRoutes"));
+const preguntaRoutes_1 = __importDefault(require("./routes/preguntaRoutes"));
+const consulta1Routes_1 = __importDefault(require("./routes/consulta1Routes"));
+const respuestaRoutes_1 = __importDefault(require("./routes/respuestaRoutes"));
+const encuestaRoutes_1 = __importDefault(require("./routes/encuestaRoutes"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -24,9 +28,13 @@ class Server {
     }
     routes() {
         this.app.use('/', indexRoutes_1.default);
+        this.app.use('/consulta1', consulta1Routes_1.default);
         this.app.use('/consulta2', consulta2Routes_1.default);
         this.app.use('/paises', paisRoutes_1.default);
         this.app.use('/regiones', regionRoutes_1.default);
+        this.app.use('/preguntas', preguntaRoutes_1.default);
+        this.app.use('/respuestas', respuestaRoutes_1.default);
+        this.app.use('/encuestas', encuestaRoutes_1.default);
     }
     start() {
         this.app.listen(process.env.SERVER_PORT, () => {
