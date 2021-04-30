@@ -14,7 +14,7 @@ class PreguntaRoutes{
         this.router.get('/:id', p.getOne);
         this.router.post('/', p.insert);
         this.router.delete('/:id', p.delete);
-        this.router.put('/:id', p.update)
+        this.router.post('/update', p.update)
     }
 }
 

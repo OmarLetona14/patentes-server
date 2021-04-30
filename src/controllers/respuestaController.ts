@@ -13,6 +13,15 @@ class RespuestaController{
         });
     }
 
+    public async getByContenido(req:Request, res:Response): Promise<void>{
+        const q = `select * from respuesta
+        where respuesta = '${req.body.respuesta}';`;
+        await connection.query(q, (err, result, fields)=>{
+            if (err) throw err;
+            res.json(result[0]);
+        });
+    }
+
 }
 
 const respuestaController = new RespuestaController();

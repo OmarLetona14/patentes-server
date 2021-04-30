@@ -13,11 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../database/connection"));
-class RespuestaController {
-    getByQuestion(req, res) {
+class InventorController {
+    getByInventor(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `select * from respuesta
-        where id_pregunta = ${req.body.id_pregunta}`;
+            const q = `select inv.id_inventor, inv.nombre_inventor from invento as i
+        inner join invento_inventor as ii on ii.id_invento = i.id_invento
+        inner join inventor as inv on inv.id_inventor = ii.id_inventor
+        where i.nombre_invento = '${req.body.nombre_invento}';`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -25,17 +27,16 @@ class RespuestaController {
             });
         });
     }
-    getByContenido(req, res) {
+    getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `select * from respuesta
-        where respuesta = '${req.body.respuesta}';`;
+            const q = `select * from inventor;`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
-                res.json(result[0]);
+                res.json(result);
             });
         });
     }
 }
-const respuestaController = new RespuestaController();
-exports.default = respuestaController;
+const inventorController = new InventorController();
+exports.default = inventorController;

@@ -13,16 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../database/connection"));
-class PreguntaController {
+class InventoController {
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const q = `select p.id_pregunta, p.contenido, e.id_encuesta, e.nombre_encuesta, rc.id_respuesta_correcta,
-        r.id_respuesta, r.respuesta, r.inciso from pregunta as p 
-        inner join encuesta as e on e.id_encuesta = p.id_encuesta
-        left join respuesta_correcta rc on rc.id_pregunta = p.id_pregunta
-        left join respuesta as r on r.id_respuesta = rc.id_respuesta
-        where p.id_pregunta = ${id};`;
+            const q = `select i.id_invento, i.nombre_invento, i.anio, p.id_pais, p.nombre_pais, pro.id_profesional, 
+        pro.nombre_profesional, inv.id_inventor, inv.nombre_inventor
+            from invento as i 
+            inner join pais as p on p.id_pais = i.id_pais
+            inner join invento_profesional as pi on pi.id_invento = i.id_invento
+            inner join profesional as pro on pro.id_profesional = pi.id_profesional
+            inner join invento_inventor as ii on ii.id_invento = i.id_invento
+            inner join  inventor as inv on inv.id_inventor = ii.id_inventor
+        where i.id_invento = ${id};`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -32,11 +35,14 @@ class PreguntaController {
     }
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `select p.id_pregunta, p.contenido, e.id_encuesta, e.nombre_encuesta, rc.id_respuesta_correcta,
-        r.id_respuesta, r.respuesta, r.inciso from pregunta as p 
-        inner join encuesta as e on e.id_encuesta = p.id_encuesta
-        left join respuesta_correcta rc on rc.id_pregunta = p.id_pregunta
-        left join respuesta as r on r.id_respuesta = rc.id_respuesta;`;
+            const q = `select i.id_invento, i.nombre_invento, i.anio, p.id_pais, p.nombre_pais, pro.id_profesional, 
+        pro.nombre_profesional, inv.id_inventor, inv.nombre_inventor
+            from invento as i 
+            inner join pais as p on p.id_pais = i.id_pais
+            inner join invento_profesional as pi on pi.id_invento = i.id_invento
+            inner join profesional as pro on pro.id_profesional = pi.id_profesional
+            inner join invento_inventor as ii on ii.id_invento = i.id_invento
+            inner join  inventor as inv on inv.id_inventor = ii.id_inventor;`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -46,8 +52,9 @@ class PreguntaController {
     }
     insert(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `insert into pregunta (contenido, id_encuesta)
-        values ('${req.body.contenido}', ${req.body.id_encuesta});`;
+            const q = `insert into pais(nombre_pais, poblacion, area, capital,id_region)
+        values ('${req.body.nombre_pais}', ${req.body.poblacion}, ${req.body.area}, '${req.body.capital}',
+        ${req.body.id_region});`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -55,22 +62,11 @@ class PreguntaController {
             });
         });
     }
-    delete(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            const q = `delete from pregunta where id_pregunta = ${id} `;
-            yield connection_1.default.query(q, (err, result, fields) => {
-                if (err)
-                    throw err;
-                res.json({ "Message": "Eliminado correctamente" });
-            });
-        });
-    }
     update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const q = `call updatePregunta('${req.body.contenido}', ${req.body.id_encuesta}, 
-        ${req.body.id_pregunta}, ${req.body.id_respuesta});`;
+            const q = `call updateInvento('${req.body.nombre_invento}', ${req.body.anio}, ${req.body.id_pais},
+        ${id}, ${req.body.id_profesional}, ${req.body.id_inventor});`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -79,5 +75,5 @@ class PreguntaController {
         });
     }
 }
-const preguntaController = new PreguntaController();
-exports.default = preguntaController;
+const inventoController = new InventoController();
+exports.default = inventoController;

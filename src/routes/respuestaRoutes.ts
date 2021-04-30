@@ -11,6 +11,7 @@ class RespuestaRoutes{
 
     configure():void{
         this.router.post('/', r.getByQuestion);
+        this.router.post('/getbycontent', r.getByContenido);
     }
 }
 

@@ -15,7 +15,7 @@ class PreguntaRoutes {
         this.router.get('/:id', preguntaController_1.default.getOne);
         this.router.post('/', preguntaController_1.default.insert);
         this.router.delete('/:id', preguntaController_1.default.delete);
-        this.router.put('/:id', preguntaController_1.default.update);
+        this.router.post('/update', preguntaController_1.default.update);
     }
 }
 const preguntaRoutes = new PreguntaRoutes();

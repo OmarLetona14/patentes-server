@@ -5,10 +5,11 @@ class PreguntaController{
 
     public async getOne(req:Request,res:Response): Promise<void>{
         const {id} = req.params;
-        const q = `select * from pregunta as p 
+        const q = `select p.id_pregunta, p.contenido, e.id_encuesta, e.nombre_encuesta, rc.id_respuesta_correcta,
+        r.id_respuesta, r.respuesta, r.inciso from pregunta as p 
         inner join encuesta as e on e.id_encuesta = p.id_encuesta
-        inner join respuesta_correcta rc on rc.id_pregunta = p.id_pregunta
-        inner join respuesta as r on r.id_respuesta = rc.id_respuesta
+        left join respuesta_correcta rc on rc.id_pregunta = p.id_pregunta
+        left join respuesta as r on r.id_respuesta = rc.id_respuesta
         where p.id_pregunta = ${id};`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
@@ -17,10 +18,11 @@ class PreguntaController{
     }
 
     public async getAll(req:Request, res:Response): Promise<void>{
-        const q = `select * from pregunta as p 
+        const q = `select p.id_pregunta, p.contenido, e.id_encuesta, e.nombre_encuesta, rc.id_respuesta_correcta,
+        r.id_respuesta, r.respuesta, r.inciso from pregunta as p 
         inner join encuesta as e on e.id_encuesta = p.id_encuesta
-        inner join respuesta_correcta rc on rc.id_pregunta = p.id_pregunta
-        inner join respuesta as r on r.id_respuesta = rc.id_respuesta;`;
+        left join respuesta_correcta rc on rc.id_pregunta = p.id_pregunta
+        left join respuesta as r on r.id_respuesta = rc.id_respuesta;`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
             res.json(result);
@@ -47,8 +49,8 @@ class PreguntaController{
 
     public async update(req:Request, res:Response){
         const {id} = req.params;
-        const q = `update pregunta set contenido = '${req.body.contenido}', id_encuesta = ${req.body.id_encuesta}
-        where id_pregunta = ${id};`;
+        const q = `call updatePregunta('${req.body.contenido}', ${req.body.id_encuesta}, 
+        ${req.body.id_pregunta}, ${req.body.id_respuesta});`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
             res.json({"Message":"Actualizado correctamente"});

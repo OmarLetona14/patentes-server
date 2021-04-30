@@ -13,11 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../database/connection"));
-class RespuestaController {
-    getByQuestion(req, res) {
+class ProfesionalController {
+    getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `select * from respuesta
-        where id_pregunta = ${req.body.id_pregunta}`;
+            const q = `select * from profesional;`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -25,17 +24,6 @@ class RespuestaController {
             });
         });
     }
-    getByContenido(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const q = `select * from respuesta
-        where respuesta = '${req.body.respuesta}';`;
-            yield connection_1.default.query(q, (err, result, fields) => {
-                if (err)
-                    throw err;
-                res.json(result[0]);
-            });
-        });
-    }
 }
-const respuestaController = new RespuestaController();
-exports.default = respuestaController;
+const profesionalController = new ProfesionalController();
+exports.default = profesionalController;
