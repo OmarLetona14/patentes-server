@@ -6,7 +6,7 @@
   "scripts": {
     "wserver": "nodemon build/index.js",
     "tbuild": "tsc -w",
-    "start": "node node -r dotenv/config build/."
+    "start": "node -r dotenv/config build/."
   },
   "keywords": [],
   "author": "",
