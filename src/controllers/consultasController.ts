@@ -108,7 +108,7 @@ class ConsultasController{
         from inventor as i
         inner join invento_inventor ii on ii.id_inventor = i.id_inventor
         inner join invento as inv on inv.id_invento = ii.id_invento
-        where substr(i.nombre_inventor,1,2) = "BE"
+        where substr(i.nombre_inventor,1,2) = "Be"
         order by substr(i.nombre_inventor,1,2);`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
@@ -129,11 +129,11 @@ class ConsultasController{
     }
 
     public async getConsulta11(req:Request, res:Response): Promise<void>{
-        const q = `select p.nombre_pais, p.area
+        const q = `select p.nombre_pais, p.area,count(*) as fronteras
         from frontera as f
         inner join pais as p on p.id_pais = f.id_pais_origen
         inner join pais as p1 on p1.id_pais = f.id_pais_frontera
-        group by p.nombre_pais
+        group by p.nombre_pais,p.area
         having count(*) > 7
         order by p.area desc;`;
         await connection.query(q, (err, result, fields)=>{
