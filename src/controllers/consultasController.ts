@@ -146,7 +146,7 @@ class ConsultasController{
         const q = `select i.nombre_invento
         from invento as i
         where length(i.nombre_invento) = 4 and 
-        lower(substr(i.nombre_invento,1,1)) = 'l';`;
+        lower(substr(i.nombre_invento,1,1)) = 'L';`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
             res.json(result);
@@ -213,7 +213,7 @@ class ConsultasController{
         where ii.anio = (select i.anio from invento as i
         inner join invento_inventor as ii on ii.id_invento = i.id_invento
         inner join inventor as inv on inv.id_inventor = ii.id_inventor
-        where inv.nombre_inventor = 'BENZ');`;
+        where inv.nombre_inventor = 'Benz');`;
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
             res.json(result);

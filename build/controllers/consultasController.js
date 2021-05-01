@@ -136,7 +136,7 @@ class ConsultasController {
         from inventor as i
         inner join invento_inventor ii on ii.id_inventor = i.id_inventor
         inner join invento as inv on inv.id_invento = ii.id_invento
-        where substr(i.nombre_inventor,1,2) = "BE"
+        where substr(i.nombre_inventor,1,2) = "Be"
         order by substr(i.nombre_inventor,1,2);`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
@@ -161,11 +161,11 @@ class ConsultasController {
     }
     getConsulta11(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `select p.nombre_pais, p.area
+            const q = `select p.nombre_pais, p.area,count(*) as fronteras
         from frontera as f
         inner join pais as p on p.id_pais = f.id_pais_origen
         inner join pais as p1 on p1.id_pais = f.id_pais_frontera
-        group by p.nombre_pais
+        group by p.nombre_pais,p.area
         having count(*) > 7
         order by p.area desc;`;
             yield connection_1.default.query(q, (err, result, fields) => {
@@ -180,7 +180,7 @@ class ConsultasController {
             const q = `select i.nombre_invento
         from invento as i
         where length(i.nombre_invento) = 4 and 
-        lower(substr(i.nombre_invento,1,1)) = 'l';`;
+        lower(substr(i.nombre_invento,1,1)) = 'L';`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
@@ -257,7 +257,7 @@ class ConsultasController {
         where ii.anio = (select i.anio from invento as i
         inner join invento_inventor as ii on ii.id_invento = i.id_invento
         inner join inventor as inv on inv.id_inventor = ii.id_inventor
-        where inv.nombre_inventor = 'BENZ');`;
+        where inv.nombre_inventor = 'Benz');`;
             yield connection_1.default.query(q, (err, result, fields) => {
                 if (err)
                     throw err;
