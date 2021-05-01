@@ -38,6 +38,22 @@ class PaisController {
             });
         });
     }
+    getFronteras(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const q = `select p1.nombre_pais as frontera, 
+        if(f.norte !="", "Norte", if(f.sur !="", "Sur", if(f.este !="", "Este", if(f.oeste !="", "Oeste", "")))) as cardinalidad
+        from frontera as f
+        inner join pais as p on p.id_pais = f.id_pais_origen
+        inner join pais as p1 on p1.id_pais = f.id_pais_frontera
+        where p.id_pais = ${id};`;
+            yield connection_1.default.query(q, (err, result, fields) => {
+                if (err)
+                    throw err;
+                res.json(result);
+            });
+        });
+    }
     insert(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const q = `insert into pais(nombre_pais, poblacion, area, capital,id_region)

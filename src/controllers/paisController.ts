@@ -23,6 +23,20 @@ class PaisController{
         });
     }
 
+    public async getFronteras(req:Request, res:Response): Promise<void>{
+        const {id} = req.params;
+        const q = `select p1.nombre_pais as frontera, 
+        if(f.norte !="", "Norte", if(f.sur !="", "Sur", if(f.este !="", "Este", if(f.oeste !="", "Oeste", "")))) as cardinalidad
+        from frontera as f
+        inner join pais as p on p.id_pais = f.id_pais_origen
+        inner join pais as p1 on p1.id_pais = f.id_pais_frontera
+        where p.id_pais = ${id};`;
+        await connection.query(q, (err, result, fields)=>{
+            if (err) throw err;
+            res.json(result);
+        });
+    }
+
     public async insert(req:Request, res:Response): Promise<void>{
         const q = `insert into pais(nombre_pais, poblacion, area, capital,id_region)
         values ('${req.body.nombre_pais}', ${req.body.poblacion}, ${req.body.area}, '${req.body.capital}',
@@ -51,6 +65,8 @@ class PaisController{
             res.json({"Message":"Actualizado correctamente"});
         });
     }
+
+
 }
 
 const paisController = new PaisController();
