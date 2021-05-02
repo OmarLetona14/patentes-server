@@ -37,6 +37,16 @@ class PaisController{
         });
     }
 
+    public async insertFrontera(req:Request, res:Response): Promise<void>{
+        const q = `insert into frontera values(norte, sur, este, oeste, id_pais_origen, id_pais_frontera)
+        values ('${req.body.norte}', '${req.body.sur}', '${req.body.este}', '${req.body.oeste}',
+        ${req.body.id_pais_origen}, ${req.body.id_pais_frontera});`;
+        await connection.query(q, (err, result, fields)=>{
+            if (err) throw err;
+            res.json({"Message":"Insertado correctamente"});
+        });
+    }
+
     public async insert(req:Request, res:Response): Promise<void>{
         const q = `insert into pais(nombre_pais, poblacion, area, capital,id_region)
         values ('${req.body.nombre_pais}', ${req.body.poblacion}, ${req.body.area}, '${req.body.capital}',
