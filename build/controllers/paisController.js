@@ -56,7 +56,7 @@ class PaisController {
     }
     insertFrontera(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = `insert into frontera values(norte, sur, este, oeste, id_pais_origen, id_pais_frontera)
+            const q = `insert into frontera (norte, sur, este, oeste, id_pais_origen, id_pais_frontera)
         values ('${req.body.norte}', '${req.body.sur}', '${req.body.este}', '${req.body.oeste}',
         ${req.body.id_pais_origen}, ${req.body.id_pais_frontera});`;
             yield connection_1.default.query(q, (err, result, fields) => {
