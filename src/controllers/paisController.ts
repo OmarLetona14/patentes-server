@@ -25,7 +25,7 @@ class PaisController{
 
     public async getFronteras(req:Request, res:Response): Promise<void>{
         const {id} = req.params;
-        const q = `select p1.nombre_pais as frontera, 
+        const q = `select f.id_frontera, p1.nombre_pais as frontera, 
         if(f.norte !="", "Norte", if(f.sur !="", "Sur", if(f.este !="", "Este", if(f.oeste !="", "Oeste", "")))) as cardinalidad
         from frontera as f
         inner join pais as p on p.id_pais = f.id_pais_origen
@@ -44,6 +44,15 @@ class PaisController{
         await connection.query(q, (err, result, fields)=>{
             if (err) throw err;
             res.json({"Message":"Insertado correctamente"});
+        });
+    }
+
+    public async deleteFrontera(req:Request, res:Response):Promise<void>{
+        const {id} = req.params;
+        const q =`delete from frontera where id_frontera = ${id} `;
+        await connection.query(q, (err, result, fields)=>{
+            if (err) throw err;
+            res.json({"Message":"Eliminado correctamente"});
         });
     }
 
