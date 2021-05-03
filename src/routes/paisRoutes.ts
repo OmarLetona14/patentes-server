@@ -14,6 +14,7 @@ class PaisRoutes{
         this.router.get('/:id', p.getOnePais);
         this.router.get('/fronteras/:id', p.getFronteras);
         this.router.post('/fronteras', p.insertFrontera);
+        this.router.delete('/fronteras/:id', p.deleteFrontera);
         this.router.post('/', p.insert);
         this.router.delete('/:id', p.delete);
         this.router.put('/:id', p.update)
